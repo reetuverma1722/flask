@@ -14,20 +14,19 @@ def get_msg():
 
 
 @app.route("/send_data", methods=["POST"])
-
 def receive_data():
     try:
-        data = request.json.get("data")  # Use get() to safely access the "data" key
-        if data is None:
-            return jsonify({"error": "Invalid data format"}), 400
-
+        data = request.json["data"]
+        # print(data)
+        response_data = {"message": "Data received successfully"}
+        # data_string = json.dumps(data)
         # Assuming 'summerycalc' is defined and imported properly
-        summery, swc, dwc = summerycalc(data)
-        return jsonify(summery=summery, swc=swc, dwc=dwc), 200
-
-    except Exception as e:
-        # Handle any other unexpected exceptions
-        return jsonify({"error": str(e)}), 500
+        # summery, doc, orig_word_count, summery_word_count = summerycalc(data)
+        summery,swc,dwc = summerycalc(data)
+        # print(summery)
+        return jsonify( summery=summery,swc=swc,dwc=dwc), 200
+    except KeyError:
+        return jsonify({"error": "Invalid data format"}), 400
 
 
 
