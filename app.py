@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from main import summerycalc
 import json
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+
+CORS(app)
 
 @app.route("/game")
 def get_data():
@@ -16,7 +19,7 @@ def get_msg():
 @app.route("/send_data", methods=["POST"])
 def receive_data():
     try:
-        data = request.json["data"]
+        data = request.json["story"]
         # print(data)
         response_data = {"message": "Data received successfully"}
         # data_string = json.dumps(data)
