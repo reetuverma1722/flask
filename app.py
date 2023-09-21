@@ -1,11 +1,9 @@
 from flask import Flask, request, jsonify
 from main import summerycalc
+from hug import summeryCalc2
 import json
-from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-
-CORS(app)
 
 @app.route("/game")
 def get_data():
@@ -19,7 +17,7 @@ def get_msg():
 @app.route("/send_data", methods=["POST"])
 def receive_data():
     try:
-        data = request.json["story"]
+        data = request.json["data"]
         # print(data)
         response_data = {"message": "Data received successfully"}
         # data_string = json.dumps(data)
@@ -30,6 +28,17 @@ def receive_data():
         return jsonify( summery=summery,swc=swc,dwc=dwc), 200
     except KeyError:
         return jsonify({"error": "Invalid data format"}), 400
+
+
+
+@app.route("/send_data2", methods=["POST"])
+def reciveData():
+    try:
+        data = request.json["data"]
+        res = summeryCalc2(data)
+        return jsonify(summery=res),200
+    except KeyError:
+      return jsonify({"error":"Invalid formate"})
 
 
 
