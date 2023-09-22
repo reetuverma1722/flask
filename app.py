@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 from main import summerycalc
 from hug import summeryCalc2
 import json
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 
 @app.route("/game")
 def get_data():
@@ -44,4 +46,5 @@ def reciveData():
 
 
 if __name__ == "__main__":
+
     app.run(port=5000)
